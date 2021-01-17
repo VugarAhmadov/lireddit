@@ -1,19 +1,16 @@
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { AppConfigService } from './config/app/config.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const config = new DocumentBuilder()
-    .setTitle('lireddit')
-    .setDescription('The lireddit API description')
-    .setVersion('1.0')
-    .addTag('reddits')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  const appConfig: AppConfigService = app.get('AppConfigService');
 
-  await app.listen(3000);
+  await app.listen(appConfig.port, appConfig.hostname, () =>
+    console.log(
+      `App running on: ${appConfig.port}. and hostname: ${appConfig.hostname}`,
+    ),
+  );
 }
 bootstrap();
