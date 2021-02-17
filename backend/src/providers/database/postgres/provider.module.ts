@@ -3,7 +3,8 @@ import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import { DatabaseType } from 'typeorm';
 import { PostgresConfigModule } from 'src/config/database/postgres/config.module';
 import { PostgresConfigService } from 'src/config/database/postgres/config.service';
-import { IdeaEntity } from 'src/modules/idea/idea.entity';
+
+import { User } from 'src/modules/user/user.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { IdeaEntity } from 'src/modules/idea/idea.entity';
         database: postgresConfigService.database,
         synchronize: true,
         logging: true, // check if node_env is development
-        entities: [IdeaEntity],
+        entities: [User],
       }),
     } as TypeOrmModuleAsyncOptions),
   ],
